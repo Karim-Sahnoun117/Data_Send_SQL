@@ -72,6 +72,4 @@ Follow the steps below to set up your project in Code::Blocks.
 #### 2. Linker Settings
 - In the **Linker settings** tab, add the following line in the **Link libraries** section:
 
-   ![alt text](image-2.png)
-    
-
+   ![alt text](Linker_setting-1.png)
