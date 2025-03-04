@@ -71,14 +71,7 @@ Follow the steps below to set up your project in Code::Blocks.
   
 #### 2. Linker Settings
 - In the **Linker settings** tab, add the following line in the **Link libraries** section:
-
+![alt text](image-2.png)
    
-    ```
+    
 
-#### 3. Search Directories
-- In the **Search directories** tab, add the following paths:
-    - **Compiler**: `C:\msys64\mingw32\include`
-    - **Linker**: `C:\msys64\mingw32\lib`
-    ![alt text](image-2.png)
-  
-After configuring these settings, click **OK** to save the changes.
