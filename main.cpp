@@ -5,72 +5,55 @@
 
 using namespace std;
 
-/*int main() {
-    SQLHENV hEnv;
-    SQLHDBC hDbc;
-    SQLHSTMT hStmt; // Ajout d'un handle de statement pour exécuter des requêtes
-     ret;
+int main() {
 
-    // Initialiser l'environnement ODBC
-    ret = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv);
-    if (ret != SQL_SUCCESS) {
-        std::cerr << "Erreur d'allocation de l'environnement!" << std::endl;
-        return 1;
+SQLHENV henv; //handle pour l'environnement odbc
+SQLHDBC hdbc; //handle de la connexion  Ã  la base de donnÃ©es *
+SQLHSTMT hstmt ;//handle pour executer les requetes sql
+SQLRETURN retour; //variable pour stocker les codes de retiures de la fonction odbc
+
+retour = SQLAllocHandle(SQL_HANDLE_ENV,SQL_NULL_HANDLE,&henv);
+if(retour != SQL_SUCCESS)
+    {
+    cerr<<"erreur dallocation de l'environnement"<<endl;
+    }
+retour = SQLSetEnvAttr(henv,SQL_ATTR_ODBC_VERSION,(SQLPOINTER)SQL_OV_ODBC3,0);
+if(retour != SQL_SUCCESS)
+    {
+    cerr<<"Erreur de configuration de la version ODBC!"<<endl;
+    }
+retour = SQLAllocHandle(SQL_HANDLE_DBC, henv, &hdbc);
+if (retour != SQL_SUCCESS)
+    {
+    cerr << "Erreur d'allocation de la connexion!" << std::endl;
     }
 
-    ret = SQLSetEnvAttr(hEnv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, 0);
-    if (ret != SQL_SUCCESS) {
-        std::cerr << "Erreur de configuration de la version ODBC!" << std::endl;
-        return 1;
+
+  retour = SQLConnect(hdbc, (SQLCHAR*)"PostgreSQL35w", SQL_NTS,(SQLCHAR*)"postgres", SQL_NTS,(SQLCHAR*)"salut", SQL_NTS);
+  if (retour != SQL_SUCCESS)
+    {
+    cerr << "Erreur de  connexion!" << std::endl;
+    }
+   cout<<"la connexion reussie avec postgresql avec odbc"<<endl;
+
+retour = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
+if (retour != SQL_SUCCESS)
+    {
+    cerr << "Erreur d'allocation de HANDLE STATEMENT" << endl;
+    }
+ const char* insertion = "INSERT INTO utilisateur2  (nom, age,genre) VALUES ('KARIM ', 36,'male')";
+    retour = SQLExecDirect(hstmt, (SQLCHAR*)insertion, SQL_NTS);
+    if (retour != SQL_SUCCESS && retour != SQL_SUCCESS_WITH_INFO) {
+      cerr << "Erreur d'execution de la requete d'insertion!" << endl;
+
     }
 
-    // Initialiser la connexion à la base de données
-    ret = SQLAllocHandle(SQL_HANDLE_DBC, hEnv, &hDbc);
-    if (ret != SQL_SUCCESS) {
-        std::cerr << "Erreur d'allocation de la connexion!" << std::endl;
-        return 1;
-    }
+   cout << "insertion reussie" << endl;
 
-    // Connexion via DSN (assurez-vous que le DSN 'PostgreSQL' est configuré dans ODBC)
-    ret = SQLConnect(hDbc, (SQLCHAR*)"PostgreSQL35w", SQL_NTS,
-                     (SQLCHAR*)"postgres", SQL_NTS,
-                     (SQLCHAR*)"salut", SQL_NTS); // Remplacez par ton mot de passe
-    if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO) {
-        std::cerr << "Erreur de connexion!" << std::endl;
-        return 1;
-    }
-
-    std::cout << "Connexion réussie à PostgreSQL via ODBC!" << std::endl;
-
-    // Créer un handle de statement pour envoyer des requêtes SQL
-    ret = SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &hStmt);
-    if (ret != SQL_SUCCESS) {
-        std::cerr << "Erreur d'allocation du handle de statement!" << std::endl;
-        return 1;
-    }
-
-    // Exemple d'insertion dans une table 'utilisateurs'
-    //const char* insertQuery = "INSERT INTO utilisateurs (nom, age) VALUES ('radhia', 40)";
-     //const char* insertQuery = "INSERT INTO karim (nom, age,genre) VALUES ('krayem ', 40,'masculin' )";
-     const char* insertQuery = "INSERT INTO utilisateur  (nom, age,genre) VALUES ('krayem ', 40,'masculin' )";
-    ret = SQLExecDirect(hStmt, (SQLCHAR*)insertQuery, SQL_NTS);
-    if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO) {
-        std::cerr << "Erreur d'exécution de la requête d'insertion!" << std::endl;
-        return 1;
-    }
-
-    std::cout << "Insertion réussie!" << std::endl;
-
-    // Déconnexion et nettoyage
-    SQLFreeHandle(SQL_HANDLE_STMT, hStmt); // Libérer le handle du statement
-    SQLDisconnect(hDbc);
-    SQLFreeHandle(SQL_HANDLE_DBC, hDbc);
-    SQLFreeHandle(SQL_HANDLE_ENV, hEnv);
+    SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
+    SQLDisconnect(hdbc);
+    SQLFreeHandle(SQL_HANDLE_DBC, hdbc);
+    SQLFreeHandle(SQL_HANDLE_ENV, henv);
 
     return 0;
-}
-*/
-int main(){
-
-
 }
