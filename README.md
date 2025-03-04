@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS utilisateur2 (
     age INT,
     genre VARCHAR(20)
 );
-
+```
 ## Setting Up Code::Blocks
 
 Follow the steps below to set up your project in Code::Blocks.
